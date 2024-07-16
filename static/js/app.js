@@ -1,3 +1,4 @@
+// store the json url in a variable
 const url = "https://static.bc-edx.com/data/dl-1-2/m14/lms/starter/samples.json";
 
 // Build the metadata panel
@@ -6,7 +7,7 @@ function buildMetadata(sample) {
 
     // get the metadata field
     let metadataField = data.metadata;
-    // console.log("This is the metadata", metadata);
+    console.log("This is the metadata field", metadataField);
 
     // Filter the metadata for the object with the desired sample number
     let sampleNumber = metadataField.filter(subject => subject.id == sample)[0];
@@ -18,10 +19,9 @@ function buildMetadata(sample) {
     // Use `.html("") to clear any existing metadata
     panel.html("")
 
-    // Inside a loop, you will need to use d3 to append new
-    // tags for each key-value in the filtered metadata.
+    // Append new tags for each key-value pair the sample number
     Object.entries(sampleNumber).forEach(([key, value]) => {
-      panel.append("h6").text(`${key}: ${value}`);
+      panel.append("h6").text(`${key.toUpperCase()}: ${value}`);
     });
 
   });
@@ -33,7 +33,7 @@ function buildCharts(sample) {
 
     // Get the samples field
     let samplesField = data.samples;
-    // console.log("This is the samples field", samplesField);
+    console.log("This is the samples field", samplesField);
 
     // Filter the samples for the object with the desired sample number
     let sampleNumber = samplesField.filter(subject => subject.id == sample)[0];
@@ -85,12 +85,11 @@ function buildCharts(sample) {
     // Map the top ten otu_ids to a list of strings for your yticks
     let topTenOtuIds = slicedSortedValues.map((value, index) => `OTU ${otuIds[index]}`);
 
-    console.log(topTenValues);
-    console.log(topTenLabels);
-    console.log(topTenOtuIds);
+    console.log("The top ten sample_values", topTenValues);
+    console.log("The top ten otu_labels", topTenLabels);
+    console.log("The top ten otu_ids", topTenOtuIds);
     
     // Build a Bar Chart
-    // Don't forget to slice and reverse the input data appropriately
     let barData = [{
       type: 'bar',
       x: topTenValues,
